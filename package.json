@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest",
     "start": "node dist/main.js",
     "build": "webpack --config webpack.prod.js",
     "start:dev": "webpack --config webpack.dev.js",
