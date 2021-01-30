@@ -1,4 +1,3 @@
-import { container } from 'webpack';
 import RequestValidationError from '../errors/request-validation-error';
 
 export default () => (req, res, next) => {
