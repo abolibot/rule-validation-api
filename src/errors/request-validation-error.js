@@ -1,4 +1,4 @@
-class RequestValidationError extends Error {
+export default class RequestValidationError extends Error {
   constructor(message) {
     super();
 
@@ -18,5 +18,3 @@ class RequestValidationError extends Error {
     };
   }
 }
-
-export default RequestValidationError;
