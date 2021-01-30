@@ -1,6 +1,11 @@
 import express from 'express';
 
+import validateRuleController from '../controllers/rule-validator';
+import ruleValidator from '../validators/rule-validator';
+
 const router = express.Router();
+const { validateRule } = validateRuleController;
+const requestBodyValidator = ruleValidator();
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -15,5 +20,7 @@ router.get('/', (req, res) => {
     }
   });
 });
+
+router.post('/validate-rule', requestBodyValidator, validateRule);
 
 export default router;
