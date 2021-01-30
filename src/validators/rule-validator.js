@@ -1,3 +1,4 @@
+import { container } from 'webpack';
 import RequestValidationError from '../errors/request-validation-error';
 
 export default () => (req, res, next) => {
@@ -9,7 +10,7 @@ export default () => (req, res, next) => {
     },
     data: {
       value: req.body?.data,
-      allowedTypes: ['array', 'object', 'string'],
+      allowedTypes: ['object', 'string'],
       invalidTypeMessage: 'data should be an object, array or string.'
     },
     'rule.field': {
@@ -48,25 +49,27 @@ export default () => (req, res, next) => {
 
   let specifiedFields;
 
-  if (typeof req.body.data === 'array') {
-    console.log('here');
+  if (typeof req.body.data === 'object' && Array.isArray(req.body.data)) {
+    console.log('array');
     const fields = [];
     for (let i = 0; i < req.body.data.length; i++) {
-      fields.push(i);
+      fields.push(i.toString());
     }
     specifiedFields = fields;
   }
 
   if (typeof req.body.data === 'string') {
+    console.log('string');
     const strArray = req.body.data.split('');
     const fields = [];
     for (let i = 0; i < strArray.length; i++) {
-      fields.push(i);
+      fields.push(i.toString());
     }
     specifiedFields = fields;
   }
 
-  if (typeof req.body.data === 'object') {
+  if (typeof req.body.data === 'object' && !Array.isArray(req.body.data)) {
+    console.log('object');
     const fields = [];
     for (const field in req.body.data) {
       if (typeof req.body.data[field] === 'object') {
@@ -82,6 +85,7 @@ export default () => (req, res, next) => {
 
   console.log(specifiedFields);
   console.log(req.body.rule.field);
+  console.log(specifiedFields.includes(req.body.rule.field));
 
   if (!specifiedFields.includes(req.body.rule.field)) {
     throw new RequestValidationError(
@@ -89,7 +93,7 @@ export default () => (req, res, next) => {
     );
   }
 
-  req.body.specifiedFields = specifiedFields;
+  // req.body.specifiedFields = specifiedFields;
 
   next();
 };
