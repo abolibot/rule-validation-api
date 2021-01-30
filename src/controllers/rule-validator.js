@@ -25,7 +25,7 @@ export default {
     const result = resultMap[condition];
 
     if (result !== true) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: `field ${field} failed validation.`,
         status: 'error',
         data: {

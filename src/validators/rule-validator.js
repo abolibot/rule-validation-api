@@ -86,7 +86,5 @@ export default () => (req, res, next) => {
     );
   }
 
-  // req.body.specifiedFields = specifiedFields;
-
   next();
 };
