@@ -50,7 +50,6 @@ export default () => (req, res, next) => {
   let specifiedFields;
 
   if (typeof req.body.data === 'object' && Array.isArray(req.body.data)) {
-    console.log('array');
     const fields = [];
     for (let i = 0; i < req.body.data.length; i++) {
       fields.push(i.toString());
@@ -59,7 +58,6 @@ export default () => (req, res, next) => {
   }
 
   if (typeof req.body.data === 'string') {
-    console.log('string');
     const strArray = req.body.data.split('');
     const fields = [];
     for (let i = 0; i < strArray.length; i++) {
@@ -69,7 +67,6 @@ export default () => (req, res, next) => {
   }
 
   if (typeof req.body.data === 'object' && !Array.isArray(req.body.data)) {
-    console.log('object');
     const fields = [];
     for (const field in req.body.data) {
       if (typeof req.body.data[field] === 'object') {
@@ -82,10 +79,6 @@ export default () => (req, res, next) => {
     }
     specifiedFields = fields;
   }
-
-  console.log(specifiedFields);
-  console.log(req.body.rule.field);
-  console.log(specifiedFields.includes(req.body.rule.field));
 
   if (!specifiedFields.includes(req.body.rule.field)) {
     throw new RequestValidationError(
